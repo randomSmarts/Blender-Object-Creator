@@ -1,0 +1,19 @@
+schema_version = "1.0.0"
+
+id = "Model2Rig"
+version = "1.0.0"
+name = "Model2Rig Plugin"
+tagline = "Tool to convert model files to full Blender rigs."
+maintainer = "Aarsh Mittal <aarsh@lightberry.com>"
+type = "add-on"
+
+blender_version_min = "5.1.0"
+
+license = ["SPDX:GPL-3.0-or-later"]
+
+copyright = ["2026 Aarsh Mittal"]
+tags = ["Animation", "URDF", "MuJoCo", "Robot Data"]
+
+homepage = "https://aarsh.dev"
+documentation = "https://github.com/randomSmarts/Blender-Object-Creator"
+repository = "https://github.com/randomSmarts/Blender-Object-Creator"
