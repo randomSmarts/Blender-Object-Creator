@@ -1,6 +1,6 @@
 import bpy
 
-
+# Properties which will be attached to every scene
 class RobotImporterProperties(bpy.types.PropertyGroup):
     urdf_path: bpy.props.StringProperty( # type: ignore
         name="URDF File",

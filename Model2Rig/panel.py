@@ -1,5 +1,6 @@
+# DONE
+
 import bpy
-from bpy.types import UILayout
 
 
 class ROBOT_PT_import_panel(bpy.types.Panel):
@@ -18,13 +19,17 @@ class ROBOT_PT_import_panel(bpy.types.Panel):
     def draw(self, context):  # context = info about what user is curr. doing
         if not self.layout:
             return
-        
-        layout = self.layout
-        properties = context.scene.robot_importer
 
-        row = layout.row(align=True) # all row items sit side by side
-        row.prop(properties, "urdf_path") # When user inputs path, it gets saved to properties.urdf_path
-        row.operator("robot.select_urdf", text="", icon="FILE_FOLDER") # Runs an operator function which lets the user select a urdf file --> updates properties.urdf_path
+        layout = self.layout
+        properties = context.scene.Model2Rig
+
+        row = layout.row(align=True)  # all row items sit side by side
+        row.prop(
+            properties, "urdf_path"
+        )  # When user inputs path, it gets saved to properties.urdf_path
+        row.operator(
+            "robot.select_urdf", text="", icon="FILE_FOLDER" # robot.select_urdf refers to a idname in operators.py for a function: category.name_of_operator
+        )  # Runs an operator function which lets the user select a urdf file --> updates properties.urdf_path
 
         layout.prop(properties, "mesh_root")
         layout.prop(properties, "global_scale")
@@ -39,4 +44,4 @@ class ROBOT_PT_import_panel(bpy.types.Panel):
             icon="ARMATURE_DATA",
         )
 
-        import_button.enabled = bool(properties.urdf_path)
+        import_button.enabled = bool(properties.urdf_path) # separate from selecting the proper urdf file
