@@ -1,7 +1,16 @@
+from Model2Rig.robot_model import RobotModel
 import bpy
 
-def build_model_in_blender(context, robot, global_scale, collapse_fixed_joints, create_joint_limits):
+
+def build_model_in_blender(
+    context,
+    robot: RobotModel,
+    global_scale: float,
+    collapse_fixed_joints: bool,
+    create_joint_limits: bool,
+):
     pass
+
 
 # armature = build_model_in_blender(
 #     context=context,

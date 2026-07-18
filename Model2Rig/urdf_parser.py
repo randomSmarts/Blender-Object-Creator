@@ -1,8 +1,10 @@
 import xml.etree.ElementTree as ET
 import bpy
 
+from Model2Rig.robot_model import RobotModel
 
-def parse_urdf(urdf_path, mesh_root):
+
+def parse_urdf(urdf_path: str, mesh_root: str) -> RobotModel:
     pass
 
 

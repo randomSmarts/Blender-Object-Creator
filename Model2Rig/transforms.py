@@ -1,7 +1,9 @@
 import bpy
 import numpy as np
 
-def compute_rest_transforms(robot):
+from Model2Rig.robot_model import RobotModel
+
+def compute_rest_transforms(robot: RobotModel):
     pass
 
 # compute_rest_transforms(robot)

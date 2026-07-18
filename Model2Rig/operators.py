@@ -4,6 +4,7 @@ from Model2Rig.urdf_parser import parse_urdf
 from Model2Rig.validation import validate_model
 from Model2Rig.transforms import compute_rest_transforms
 from Model2Rig.armature_builder import build_model_in_blender
+from Model2Rig.robot_model import RobotModel
 
 
 class ROBOT_OT_select_urdf(bpy.types.Operator):
@@ -50,7 +51,7 @@ class ROBOT_OT_import_urdf(bpy.types.Operator):
         properties = context.scene.Model2Rig
 
         try:
-            robot = parse_urdf(
+            robot: RobotModel = parse_urdf(
                 urdf_path=properties.urdf_path,
                 mesh_root=properties.mesh_root,
             )
