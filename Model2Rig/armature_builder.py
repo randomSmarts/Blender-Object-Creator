@@ -1,5 +1,16 @@
 import bpy
 
+def build_model_in_blender(context, robot, global_scale, collapse_fixed_joints, create_joint_limits):
+    pass
+
+# armature = build_model_in_blender(
+#     context=context,
+#     robot=robot,
+#     global_scale=properties.global_scale,
+#     collapse_fixed_joints=properties.collapse_fixed_joints,
+#     create_joint_limits=properties.create_joint_limits,
+# )
+
 # In armature_builder.py:
 
 # 1. create armature data
@@ -7,7 +18,6 @@ import bpy
 # 3. link it to the robot collection
 # 4. make it active
 # 5. enter Edit Mode
-
 
 
 JOINT_NAMES = [

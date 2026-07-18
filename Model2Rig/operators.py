@@ -1,5 +1,10 @@
 import bpy
 
+from Model2Rig.urdf_parser import parse_urdf
+from Model2Rig.validation import validate_model
+from Model2Rig.transforms import compute_rest_transforms
+from Model2Rig.armature_builder import build_model_in_blender
+
 
 class ROBOT_OT_select_urdf(bpy.types.Operator):
     bl_idname = "robot.select_urdf"
@@ -50,10 +55,10 @@ class ROBOT_OT_import_urdf(bpy.types.Operator):
                 mesh_root=properties.mesh_root,
             )
 
-            validate_robot(robot)
+            validate_model(robot)
             compute_rest_transforms(robot)
 
-            armature = build_robot_in_blender(
+            build_model_in_blender(  # I don't think I need the result of this?
                 context=context,
                 robot=robot,
                 global_scale=properties.global_scale,

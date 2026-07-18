@@ -1,6 +1,11 @@
 import bpy
 import numpy as np
 
+def compute_rest_transforms(robot):
+    pass
+
+# compute_rest_transforms(robot)
+
 # * parsing xyz
 # * parsing rpy
 # * converting RPY to a matrix

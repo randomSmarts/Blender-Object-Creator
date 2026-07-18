@@ -1,5 +1,10 @@
 import bpy
 
+def validate_model(robot):
+    pass
+
+# validate_model(robot)
+
 # In validation.py, check that:
 
 # * the robot has at least one link
