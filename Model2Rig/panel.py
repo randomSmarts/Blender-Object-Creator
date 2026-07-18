@@ -28,10 +28,17 @@ class ROBOT_PT_import_panel(bpy.types.Panel):
             properties, "urdf_path"
         )  # When user inputs path, it gets saved to properties.urdf_path
         row.operator(
-            "robot.select_urdf", text="", icon="FILE_FOLDER" # robot.select_urdf refers to a idname in operators.py for a function: category.name_of_operator
+            "robot.select_urdf",
+            text="",
+            icon="FILE_FOLDER",  # robot.select_urdf refers to a idname in operators.py for a function: category.name_of_operator
         )  # Runs an operator function which lets the user select a urdf file --> updates properties.urdf_path
 
-        layout.prop(properties, "mesh_root")
+        row = layout.row(align=True)
+        row.prop(
+            properties, "mesh_root"
+        )  # This and the following are defined in my properties.py
+        row.operator("robot.select_meshes", text="", icon="FILE_FOLDER")
+
         layout.prop(properties, "global_scale")
         layout.prop(properties, "collapse_fixed_joints")
         layout.prop(properties, "create_joint_limits")
@@ -44,4 +51,6 @@ class ROBOT_PT_import_panel(bpy.types.Panel):
             icon="ARMATURE_DATA",
         )
 
-        import_button.enabled = bool(properties.urdf_path) # separate from selecting the proper urdf file
+        import_button.enabled = bool(
+            properties.urdf_path
+        )  # separate from selecting the proper urdf file

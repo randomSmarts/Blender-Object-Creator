@@ -16,6 +16,7 @@ classes = (
     panel.ROBOT_PT_import_panel,
     operators.ROBOT_OT_import_urdf,
     operators.ROBOT_OT_select_urdf,
+    operators.ROBOT_OT_select_meshes
     # TODO: add rest of classes needed
 )
 
