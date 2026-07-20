@@ -23,7 +23,7 @@ class ROBOT_OT_select_urdf(bpy.types.Operator):
         return {"RUNNING_MODAL"}
 
     def execute(self, context):
-        context.scene.robot_importer.urdf_path = self.filepath
+        context.scene.Model2Rig.urdf_path = self.filepath
         return {"FINISHED"}
 
 
