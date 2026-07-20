@@ -44,13 +44,15 @@ class ROBOT_PT_import_panel(bpy.types.Panel):
         layout.prop(properties, "create_joint_limits")
 
         layout.separator()
-
-        import_button = layout.operator(
-            "robot.import_urdf",
-            text="Import URDF Robot",
-            icon="ARMATURE_DATA",
+        
+        row = layout.row()
+        row.enabled = bool(
+            properties.urdf_path
+            and properties.mesh_root
         )
 
-        import_button.enabled = bool(
-            properties.urdf_path
-        )  # separate from selecting the proper urdf file
+        row.operator(
+            "robot.import_urdf",
+            text="Import URDF",
+            icon="ARMATURE_DATA",
+        )

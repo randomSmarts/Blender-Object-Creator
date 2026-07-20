@@ -65,36 +65,36 @@ def parse_urdf(urdf_path: str, mesh_root: str) -> RobotModel:
 
     for link in root.findall("link"):
         name = require_attr(link, "name")
+        visual_element = link.find("visual")
 
-        visual = link.find("visual")
+        robot_visual = None
 
-        if visual is None:
-            continue
+        if visual_element is not None:
+            origin = visual_element.find("origin")
 
-        origin = visual.find("origin")
+            if origin is None:
+                xyz = (0.0, 0.0, 0.0)
+                rpy = (0.0, 0.0, 0.0)
+            else:
+                xyz = parse_vector(origin.get("xyz", "0 0 0"))
+                rpy = parse_vector(origin.get("rpy", "0 0 0"))
 
-        if origin is None:
-            xyz = (0.0, 0.0, 0.0)
-            rpy = (0.0, 0.0, 0.0)
-        else:
-            xyz = parse_vector(origin.get("xyz", "0 0 0"))
-            rpy = parse_vector(origin.get("rpy", "0 0 0"))
+            geometry = require_child(visual_element, "geometry")
+            mesh = require_child(geometry, "mesh")
 
-        geometry = require_child(visual, "geometry")
-        mesh = require_child(geometry, "mesh")
+            mesh_filename = Path(require_attr(mesh, "filename"))
+            resolved_mesh_path = (
+                resolved_mesh_root / mesh_filename.name
+            ).resolve()
 
-        mesh_filename = Path(require_attr(mesh, "filename"))
+            scale = parse_vector(mesh.get("scale", "1 1 1"))
 
-        resolved_mesh_path = (resolved_mesh_root / mesh_filename.name).resolve()
-
-        scale = parse_vector(mesh.get("scale", "1 1 1"))
-
-        robot_visual = RobotVisual(
-            mesh_path=resolved_mesh_path,
-            origin_xyz=xyz,
-            origin_rpy=rpy,
-            scale=scale,
-        )
+            robot_visual = RobotVisual(
+                mesh_path=resolved_mesh_path,
+                origin_xyz=xyz,
+                origin_rpy=rpy,
+                scale=scale,
+            )
 
         robot.links[name] = RobotLink(
             name=name,
