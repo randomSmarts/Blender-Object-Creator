@@ -61,7 +61,7 @@ class ROBOT_OT_import_urdf(bpy.types.Operator):
                 robot
             )  # Passes it in by reference by default so modifies it in place
 
-            build_model_in_blender(  # I don't think I need the result of this?
+            resulting_armature = build_model_in_blender(  # I don't think I need the result of this?
                 context=context,
                 robot=robot,
                 global_scale=properties.global_scale,
