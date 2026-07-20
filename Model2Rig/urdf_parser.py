@@ -1,7 +1,7 @@
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-from Model2Rig.robot_model import RobotModel, RobotLink, RobotJoint, RobotVisual
+from .robot_model import RobotModel, RobotLink, RobotJoint, RobotVisual
 
 
 Vector3 = tuple[float, float, float]

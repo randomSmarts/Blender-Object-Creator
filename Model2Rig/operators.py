@@ -1,10 +1,10 @@
 import bpy
 
-from Model2Rig.urdf_parser import parse_urdf
-from Model2Rig.validation import validate_model
-from Model2Rig.transforms import compute_rest_transforms
-from Model2Rig.armature_builder import build_model_in_blender
-from Model2Rig.robot_model import RobotModel
+from .urdf_parser import parse_urdf
+from .validation import validate_model
+from .transforms import compute_rest_transforms
+from .armature_builder import build_model_in_blender
+from .robot_model import RobotModel
 
 
 class ROBOT_OT_select_urdf(bpy.types.Operator):

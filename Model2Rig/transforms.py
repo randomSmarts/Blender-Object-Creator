@@ -11,7 +11,7 @@
 
 import numpy as np
 
-from Model2Rig.robot_model import RobotJoint, RobotModel, Vector3
+from .robot_model import RobotJoint, RobotModel, Vector3
 
 
 URDF_TO_BLENDER = np.array(

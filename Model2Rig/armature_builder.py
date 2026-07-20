@@ -1,8 +1,8 @@
 import bpy
 from mathutils import Matrix, Vector
 
-from Model2Rig.mesh_builder import build_visual_mesh
-from Model2Rig.robot_model import RobotModel
+from .mesh_builder import build_visual_mesh
+from .robot_model import RobotModel
 
 
 BONE_DISPLAY_LENGTH = 0.08

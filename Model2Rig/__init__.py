@@ -1,6 +1,6 @@
 # Done
 
-from Model2Rig import panel, operators, properties
+from . import panel, operators, properties
 
 import bpy  # Blender Python API
 

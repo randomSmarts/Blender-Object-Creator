@@ -1,6 +1,6 @@
 import bpy
 
-from Model2Rig.robot_model import RobotModel
+from .robot_model import RobotModel
 
 def validate_model(robot: RobotModel):
     pass

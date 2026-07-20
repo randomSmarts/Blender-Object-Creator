@@ -3,8 +3,8 @@ from pathlib import Path
 import bpy
 from mathutils import Matrix
 
-from Model2Rig.robot_model import RobotLink, RobotVisual
-from Model2Rig.transforms import (
+from .robot_model import RobotLink, RobotVisual
+from .transforms import (
     make_transform,
     urdf_transform_to_blender,
 )
