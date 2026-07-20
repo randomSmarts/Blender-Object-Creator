@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
 from pathlib import Path
+import numpy as np
 
 
 @dataclass
@@ -13,7 +14,9 @@ class RobotVisual:
 @dataclass
 class RobotLink:
     name: str
-    visuals: RobotVisual | None
+    visuals: RobotVisual
+    rest_transform_urdf: np.ndarray | None = None
+    rest_transform_blender: np.ndarray | None = None
 
 
 @dataclass
@@ -29,6 +32,10 @@ class RobotJoint:
     upper_limit: float | None = None
     effort: float | None = None
     velocity: float | None = None
+    rest_transform_urdf: np.ndarray | None = None
+    rest_transform_blender: np.ndarray | None = None
+    axis_world_urdf: np.ndarray | None = None
+    axis_world_blender: np.ndarray | None = None
 
 
 @dataclass

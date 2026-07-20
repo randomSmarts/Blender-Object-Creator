@@ -56,10 +56,10 @@ class ROBOT_OT_import_urdf(bpy.types.Operator):
                 mesh_root=properties.mesh_root,
             )
 
-            validate_model(robot)
+            # TODO: validate_model(robot)
             compute_rest_transforms(
                 robot
-            )  # TODO: Do I change robot in place or should I output the resulting robot and pass it in
+            )  # Passes it in by reference by default so modifies it in place
 
             build_model_in_blender(  # I don't think I need the result of this?
                 context=context,
