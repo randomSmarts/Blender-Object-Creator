@@ -1,13 +1,12 @@
+# mesh_builder.py
+ 
 from pathlib import Path
 
 import bpy
 from mathutils import Matrix
 
 from .robot_model import RobotLink, RobotVisual
-from .transforms import (
-    make_transform,
-    urdf_transform_to_blender,
-)
+from .transforms import make_transform
 
 
 def numpy_to_matrix(matrix) -> Matrix:
@@ -24,14 +23,24 @@ def import_stl(
     bpy.ops.object.select_all(action="DESELECT")
 
     if hasattr(bpy.ops.wm, "stl_import"):
-        bpy.ops.wm.stl_import(filepath=str(mesh_path))
+        bpy.ops.wm.stl_import(
+            filepath=str(mesh_path),
+            forward_axis="X",
+            up_axis="Z",
+            global_scale=1.0,
+        )
     else:
-        bpy.ops.import_mesh.stl(filepath=str(mesh_path))
+        bpy.ops.import_mesh.stl(
+            filepath=str(mesh_path),
+            axis_forward="X",
+            axis_up="Z",
+            global_scale=1.0,
+        )
 
     selected_objects = context.selected_objects
 
     if selected_objects is None:
-        raise RuntimeError("Blender context has no selected objects.")
+        raise RuntimeError("Blender has no selected-object context.")
 
     imported_objects = list(selected_objects)
 
@@ -48,8 +57,8 @@ def move_to_collection(
     obj: bpy.types.Object,
     collection: bpy.types.Collection,
 ) -> None:
-    for current_collection in list(obj.users_collection):
-        current_collection.objects.unlink(obj)
+    for old_collection in list(obj.users_collection):
+        old_collection.objects.unlink(obj)
 
     collection.objects.link(obj)
 
@@ -62,8 +71,8 @@ def build_visual_mesh(
     armature_object: bpy.types.Object,
     bone_name: str,
 ) -> bpy.types.Object:
-    if link.rest_transform_blender is None:
-        raise ValueError(f"Link '{link.name}' has no Blender rest transform.")
+    if link.rest_transform_urdf is None:
+        raise ValueError(f"Link '{link.name}' has no rest transform.")
 
     mesh_object = import_stl(
         context=context,
@@ -71,19 +80,16 @@ def build_visual_mesh(
     )
 
     mesh_object.name = f"{link.name}_visual"
-
     move_to_collection(mesh_object, robot_collection)
 
-    visual_local_urdf = make_transform(
-        visual.origin_xyz,
-        visual.origin_rpy,
+    link_world = numpy_to_matrix(link.rest_transform_urdf)
+
+    visual_local = numpy_to_matrix(
+        make_transform(
+            visual.origin_xyz,
+            visual.origin_rpy,
+        )
     )
-
-    visual_local_blender = urdf_transform_to_blender(visual_local_urdf)
-
-    link_world = numpy_to_matrix(link.rest_transform_blender)
-
-    visual_local = numpy_to_matrix(visual_local_blender)
 
     scale_matrix = Matrix.Diagonal(
         (
@@ -94,35 +100,14 @@ def build_visual_mesh(
         )
     )
 
-    # World -> visual = World -> link @ Link -> visual
-    visual_world = link_world @ visual_local @ scale_matrix
+    mesh_object.matrix_world = link_world @ visual_local @ scale_matrix
 
-    mesh_object.matrix_world = visual_world
-
-    # Rigidly attach the link mesh to its controlling bone.
-    preserved_world_transform = mesh_object.matrix_world.copy()
+    world_transform = mesh_object.matrix_world.copy()
 
     mesh_object.parent = armature_object
     mesh_object.parent_type = "BONE"
     mesh_object.parent_bone = bone_name
 
-    mesh_object.matrix_world = preserved_world_transform
+    mesh_object.matrix_world = world_transform
 
     return mesh_object
-
-
-# In mesh_builder.py, for each visual:
-
-# 1. resolve its mesh path
-# 2. import the STL
-# 3. capture the newly created object
-# 4. rename it
-# 5. apply its local scale
-# 6. apply the link transform
-# 7. move it into the robot collection
-
-# The final visual transform is:
-
-# T_{\text{visual}}
-# =
-# T_{\text{link}}T_{\text{visual-origin}}
