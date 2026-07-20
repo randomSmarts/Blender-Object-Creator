@@ -57,7 +57,9 @@ class ROBOT_OT_import_urdf(bpy.types.Operator):
             )
 
             validate_model(robot)
-            compute_rest_transforms(robot)
+            compute_rest_transforms(
+                robot
+            )  # TODO: Do I change robot in place or should I output the resulting robot and pass it in
 
             build_model_in_blender(  # I don't think I need the result of this?
                 context=context,
